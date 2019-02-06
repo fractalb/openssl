@@ -12,14 +12,16 @@
 #include <openssl/e_os2.h>
 
 #if (defined(OPENSSL_SYS_UNIX) || defined(OPENSSL_SYS_CYGWIN)) \
-    && defined(OPENSSL_THREADS) && !defined(OPENSSL_NO_ASYNC) \
-    && !defined(__ANDROID__) && !defined(__OpenBSD__)
+    && !defined(OPENSSL_NO_ASYNC) && !defined(__ANDROID__) \
+    && !defined(__OpenBSD__)
 
 # include <unistd.h>
 
 # if _POSIX_VERSION >= 200112L
 
-# include <pthread.h>
+# if defined(OPENSSL_THREADS)
+#  include <pthread.h>
+# endif
 
 #  define ASYNC_POSIX
 #  define ASYNC_ARCH
